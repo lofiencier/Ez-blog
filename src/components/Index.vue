@@ -1,18 +1,23 @@
-
-
 <template>
-  <div class="root_content">
-
-  </div>
+  <!-- <Header/> -->
+  <section class="root_content">
+    <Avatar imgUrl="../static/images/avatar.jpg"/>
+    <Content/>
+  </section>
 </template>
 
 <script>
+import Header from "./header.vue"
+import Content from "./content.vue"
+import Avatar from "./avatar.vue"
 export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
     }
+  },
+  components:{
+    Header,Content,Avatar
   }
 }
 </script>
