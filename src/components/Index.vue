@@ -1,6 +1,8 @@
+
+
 <template>
-  <div class="what">
-     缩进有问题也要报错？
+  <div class="root_content">
+
   </div>
 </template>
 
@@ -14,3 +16,11 @@ export default {
   }
 }
 </script>
+
+<style lang="less">
+  .root_content{
+    width: 1000px;
+    height: auto;
+    margin:0 auto;
+  }
+</style>
