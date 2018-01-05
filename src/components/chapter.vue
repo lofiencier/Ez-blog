@@ -17,12 +17,12 @@ export default {
 
 <style lang="less">
 .single_charter {
+  margin:40px 0;
   width: 100%;
   height: auto;
   background: #fff;
   color:#444;
   padding: 40px 0;
-  margin:20px 0;
   box-shadow: rgba(0,0,0,.1) 0 2px ;
   position: relative;
   p{

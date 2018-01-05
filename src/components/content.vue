@@ -1,6 +1,10 @@
 <template>
   <div class="content">
       <Chapter/>
+      <Chapter/>
+      <Chapter/>
+      <Chapter/>
+      <Chapter/>
   </div>
 </template>
 
@@ -16,8 +20,8 @@ export default {
 
 <style lang="less">
     .content{
-        max-width:1000px;
         height: auto;
-        margin:0 auto;
-    }
+        flex: 1 1 auto;
+        margin-left: 40px;
+        }
 </style>

@@ -24,8 +24,10 @@ export default {
 
 <style lang="less">
   .root_content{
-    width: 1000px;
+    max-width: 1000px;
     height: auto;
-    margin:0 auto;
+    margin:40px auto;
+    display: flex;
+    justify-content: space-between;
   }
 </style>

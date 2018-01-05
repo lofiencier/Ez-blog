@@ -13,8 +13,9 @@ export default {
 
 <style lang="less">
 .avatar {
-  width: 100px;
+  max-width:100px;
   height: 100px;
+  flex: 1 0 auto;
   img{
       width: 100%;
       height: auto;
