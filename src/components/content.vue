@@ -1,5 +1,6 @@
 <template>
   <div class="content">
+      <Editor/>
       <Chapter/>
       <Chapter/>
       <Chapter/>
@@ -10,10 +11,16 @@
 
 <script>
 import Chapter from "./chapter.vue"
+import Editor from "./editor"
 
 export default {
+    data(){
+        return{
+            text:""
+        }
+    },
   components:{
-      Chapter
+      Chapter,Editor
   }
 }
 </script>
@@ -23,5 +30,6 @@ export default {
         height: auto;
         flex: 1 1 auto;
         margin-left: 40px;
+        position: relative;
         }
 </style>

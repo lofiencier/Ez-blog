@@ -1,7 +1,7 @@
 <template>
   <!-- <Header/> -->
   <section class="root_content">
-    <Avatar imgUrl="../static/images/avatar.jpg"/>
+    <Avatar imgUrl="./static/images/avatar.jpg" size="100px" :style="{'flex':'1 0 auto'}"/>
     <Content/>
   </section>
 </template>
@@ -11,7 +11,7 @@ import Header from "./header.vue"
 import Content from "./content.vue"
 import Avatar from "./avatar.vue"
 export default {
-  name: 'HelloWorld',
+  name: 'Mine',
   data () {
     return {
     }
