@@ -2,10 +2,12 @@ var mongoose =require("mongoose");
 var Schema=mongoose.Schema;
 
 var UserSchema=new Schema({
-    name:String,
+    email:String,
+    nickname:String,
     creatTime:Number,
     chapterIds:Array,
-    imgUrl:String
+    imgUrl:String,
+    password:String
 });
 
 var ChapterSchema=new Schema({
