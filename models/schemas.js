@@ -7,7 +7,8 @@ var UserSchema=new Schema({
     creatTime:Number,
     chapterIds:Array,
     imgUrl:String,
-    password:String
+    password:String,
+    tests:[{type:Schema.Types.ObjectId,ref:"test"}]
 });
 
 var ChapterSchema=new Schema({
@@ -32,14 +33,20 @@ var ReplySchema=new Schema({
     createTime:Number
 })
 
+var testSchema=new Schema({
+    name:{type:String,required:true},
+    author:{type:Schema.Types.ObjectId,ref:"user"},
+    content:String
+})
 var User=mongoose.model('user',UserSchema);
 var Chapter=mongoose.model('chapter',ChapterSchema);
 var Comment=mongoose.model('comment',CommentSchema);
 var Reply=mongoose.model('beReply',ReplySchema);
-
+var Test=mongoose.model("test",testSchema);
 module.exports={
     User,
     Chapter,
     Comment,
-    Reply
+    Reply,
+    Test
 }

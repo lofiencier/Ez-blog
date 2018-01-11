@@ -24,7 +24,8 @@ router.get('/', function (req, res, next) {
                     creatTime: info.creatTime || Date.now(),
                     chapterIds: [],
                     imgUrl: info.imgUrl,
-                    password: md5sum.digest('hex')
+                    password: info.password,
+                    tests:["5a57738ae025521488b6fa89"]
                 });
                 newUser.save().then(() => {
                     res.send({
