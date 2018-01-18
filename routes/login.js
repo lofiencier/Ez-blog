@@ -15,7 +15,7 @@ router.get('/', function (req, res, next) {
     }else{
         _User.findOne({"email":info.email,"password":info.password}).then(function(user){
             res.set({
-                "set-cookie":`TOKEN=${Date.now()}`
+                "Set-Cookie":`UID=${user._id}`
             })
             res.send({
                 id:user._id,

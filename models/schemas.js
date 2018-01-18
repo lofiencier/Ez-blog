@@ -2,33 +2,35 @@ var mongoose =require("mongoose");
 var Schema=mongoose.Schema;
 
 var UserSchema=new Schema({
-    email:String,
+    email:{type:String,unique:true,required:true},
     nickname:String,
     creatTime:Number,
-    chapterIds:Array,
+    chapters:[{type:Schema.Types.ObjectId,ref:"chapter"}],
     imgUrl:String,
-    password:String,
-    tests:[{type:Schema.Types.ObjectId,ref:"test"}]
+    password:{type:String,required:true},
+    msg:[{type:Schema.Types.ObjectId,ref:"beReply"}]
 });
 
 var ChapterSchema=new Schema({
     title:String,
     content:String,
-    comments:Array,
-    creator:Number,
+    comments:[{type:Schema.Types.ObjectId,ref:"comment"}],
+    creator:{type:Schema.Types.ObjectId,ref:"user"},
     createTime:Number
 })
 
 var CommentSchema=new Schema({
-    uid:Number,
-    beReplied:Array,
+    // uid:Number,
+    creator:{type:Schema.Types.ObjectId,ref:"user"},
+    beReplied:[{type:Schema.Types.ObjectId,ref:"beReply"}],
+    targetUser:{type:Schema.Types.ObjectId,ref:"user"},
     content:String,
     createTime:Number
 })
 
 var ReplySchema=new Schema({
-    uid:Number,
-    targetUser:Number,
+    replier:{type:Schema.Types.ObjectId,ref:"user"},
+    beReplier:{type:Schema.Types.ObjectId,ref:"user"},
     content:String,
     createTime:Number
 })

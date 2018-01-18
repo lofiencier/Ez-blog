@@ -18,6 +18,9 @@ db.once("open",function(){
 var signup=require("./routes/signup");
 var login=require("./routes/login");
 var _test=require("./routes/test");
+var chapter=require("./routes/chapter");
+var comment=require("./routes/comment");
+var reply =require("./routes/reply");
 var app = express();
 
 // view engine setup
@@ -36,6 +39,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use("/signup",signup);
 app.use("/login",login);
 app.use("/test",_test);
+app.use("/chapter",chapter);
+app.use("/comment",comment);
+app.use("/reply",reply);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

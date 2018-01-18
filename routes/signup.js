@@ -15,7 +15,7 @@ router.get('/', function (req, res, next) {
                 msg: "User exist"
             })
         } else {
-            if (email != undefined && password != undefined && imgUrl != undefined) {
+            if (email != undefined && password != undefined) {
                 var md5sum = crypto.createHash('md5')
                 md5sum.update(req.query.password);
                 var newUser = new _User({
@@ -24,8 +24,7 @@ router.get('/', function (req, res, next) {
                     creatTime: info.creatTime || Date.now(),
                     chapterIds: [],
                     imgUrl: info.imgUrl,
-                    password: info.password,
-                    tests:["5a57738ae025521488b6fa89"]
+                    password: info.password
                 });
                 newUser.save().then(() => {
                     res.send({
@@ -47,6 +46,7 @@ router.get('/', function (req, res, next) {
         }
     })
 });
+
 
 
 module.exports = router;
