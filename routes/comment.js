@@ -39,6 +39,7 @@ router.post('/publish',function(req,res,next){
         return Promise.all([_comment.save(),_cha])
     }).spread(function(_comment,_cha){
         console.log("评论保存完成");
+        _cha.comments.push(_comment);
         return _cha.save()
     }).then(function(){
         console.log("文章保存完成");

@@ -23,5 +23,5 @@
         "node_modules",
         "src/"
     ],
-    "ext": "js jade"
+    "ext": "js jade ejs"
 }
