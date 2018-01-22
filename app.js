@@ -14,7 +14,7 @@ db.once("open",function(){
   console.log("MONGO READY");
 })
 
-
+var discovery=require("./routes/dicovery");
 var signup=require("./routes/signup");
 var login=require("./routes/login");
 var _test=require("./routes/test");
@@ -36,12 +36,14 @@ app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use("/discovery",discovery);
 app.use("/signup",signup);
 app.use("/login",login);
 app.use("/test",_test);
 app.use("/chapter",chapter);
 app.use("/comment",comment);
 app.use("/reply",reply);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

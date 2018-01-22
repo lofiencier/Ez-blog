@@ -4,16 +4,34 @@ var mongoose = require("mongoose");
 var schemas = require("../models/schemas");
 var _User = schemas.User;
 var Chapter=schemas.Chapter;
-var crypto = require("crypto");
 
 router.get('/', function (req, res, next) {
-    // var cookie=req.get("Cookie")?req.get("Cookie"):"";
-    // var cookie=req.header.cookie;
-    // res.set({
-    //     "Set-Cookie":"UID=5a5c72244c470f196c26301b"
-    // })
-    // // console.log(cookie);
-    res.send("chapter");
+    var UID=req.cookies.UID||"";
+    if (!UID){
+        res.send({
+            status:"503",
+            msg:`Please login first,UID=${UID}`
+        })
+    }else{
+        Chapter.find({creator:UID}).populate({
+            path:"comments",
+            select:"-_id",
+            populate:[{
+                path:"creator",
+                select:"nickname"
+            },{
+                path:"targetUser",
+                select:"nickname"
+            },{
+                path:"beRepied"
+            }]
+        }).then(function(result){
+            res.send({
+                status:"200",
+                chaps:result
+            })
+        })
+    }
 })
 
 

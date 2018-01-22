@@ -1,8 +1,10 @@
 <template>
   <div class="single_comment">
     <Avatar size="16px" shape="circle"/>
-    <a href="#" class="user_name"><strong>USERNAME:</strong></a>
-    <span>你在说什么啊？</span>
+    <a :href="'#/user?id='+comment.creator._id" class="user_name"><strong>{{comment.creator.nickname}}</strong></a>
+    <span><small>评论</small></span>
+    <a :href="'#/user?id='+comment.targetUser._id" class="user_name"><strong>{{comment.targetUser.nickname}}:</strong></a>
+    <span>{{comment.content}}</span>
     <a href="#" class="reply">回复</a>
   </div>
 </template>
@@ -10,6 +12,7 @@
 <script>
 import Avatar from "./avatar";
 export default {
+  props:["comment"],
   components: {
     Avatar
   }

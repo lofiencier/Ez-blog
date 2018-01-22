@@ -18,7 +18,6 @@ export default {
     }
   },
   mounted(){
-    // console.log(this.imgUrl);
     this.init();
   },
   methods:{
