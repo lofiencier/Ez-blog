@@ -13,7 +13,7 @@ router.get('/',function(req,res,next){
 
 //评论是别人评论博主
 //发表评论，需要post指定chapter的ID
-//请求需要creatorId，chapterId，targetId(被回复者？),content
+//请求需要chapterId,targetUser,和自己的UID:creator
 router.post('/publish',function(req,res,next){
     var UID=req.cookies.UID||"";
     var chapterId=req.body.chapterId;

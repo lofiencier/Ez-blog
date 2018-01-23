@@ -16,7 +16,7 @@ router.get('/', function (req, res, next) {
         Chapter.find({creator:UID}).populate({
             path:"comments",
             select:"-_id",
-            populate:[{
+            populate:[{ 
                 path:"creator",
                 select:"nickname"
             },{

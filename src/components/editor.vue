@@ -52,6 +52,7 @@ export default {
   }
 }
 .editor_title{
+  box-sizing: border-box;
   width:100%;
   height: 40px;
 }

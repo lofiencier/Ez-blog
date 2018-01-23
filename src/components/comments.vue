@@ -9,7 +9,6 @@ import SingleComment from "./single_comment"
 export default {
   props:["comments"],
   mounted(){
-    console.log(this.comments)
   },
   components:{
     SingleComment
