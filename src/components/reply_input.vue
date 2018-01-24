@@ -3,23 +3,39 @@
       <form class="reply_form" autocomplete="false" @submit="submitHandler">
           <input type="text" class="reply_input" placeholder="写点什么吧..." name="content">
           <input type="submit" class="reply_submit" value="回复">
+          <input type="hidden" name="commentId" :value="this.commentId">
       </form>
   </div>
 </template>
 
 <script>
+import axios from "axios"
+import Bus from "./bus"
 export default {
   methods: {
     submitHandler: function(e) {
+      e=e||window.event();
       var form = e.currentTarget;
       e.preventDefault();
       var content = form.content.value;
-      console.log(this.creator, this.targetUser);
+      var commentId=form.commentId.value;
+      this.postReply({
+        content,commentId,targetUser:this.targetUser
+      },e.currentTarget);
       return false;
     },
-    postToDB: function(info) {}
+    postReply: function(info,form) {
+      console.log(info);
+      var that =this;
+      axios.post("/reply/publish",info).then(function(result){
+        if(result.data.status==="200"){
+          Bus.$emit("refresh");
+          that.$emit("toggle");
+        }
+      })
+    }
   },
-  props: ["creator", "targetUser"]
+  props: ["creator", "targetUser","commentId"]
 };
 </script>
 

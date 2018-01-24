@@ -10,7 +10,7 @@
         </div>
         <div class="comment_wrap" v-if="showInputBox||chap.comments.length>0">
           <Comments :comments="chap.comments" v-if="chap.comments.length"/>
-          <CommentBox v-if="showInputBox" :chapId="chap._id" :targetId="chap.creator" :closeBox="toggleComment"/>
+          <CommentBox v-if="showInputBox" :chapId="chap._id" :targetId="chap.creator" @toggle="toggleComment"/>
         </div>
     </div>
 </template>

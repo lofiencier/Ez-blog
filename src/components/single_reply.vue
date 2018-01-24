@@ -1,0 +1,67 @@
+<template>
+    <div class="single_reply_content">
+        <Avatar size="16px" shape="circle"/>
+        <a :href="'#/user?id='+reply.replier._id" class="user_name">
+        <strong>{{reply.replier.nickname}}:</strong>
+        </a>
+        <a :href="'#/user?id='+reply.beReplier._id" class="user_name" v-if="reply.beReplier._id!=top._id">
+        <strong>{{'@'+reply.beReplier.nickname}}</strong>
+        </a>
+        <span>{{reply.content}}</span>
+        <a href="javascript:void(0)" class="reply" @click="toggleReplyInput" :data-id="reply.replier._id">回复</a>
+        <ReplyInput v-if="showReplyInput" :targetUser="reply.replier._id" :commentId="commentId" @toggle="toggleReplyInput"/>
+    </div>
+</template>
+
+<script>
+import Avatar from "./avatar"
+import axios from "axios"
+import ReplyInput from "./reply_input"
+
+export default {
+    props:["reply","top","commentId"],
+    mounted(){
+        // console.log(this.up);
+    },
+    data(){
+        return {
+            replys:[],
+            showReplyInput:false
+        }
+    },
+    methods:{
+        fetchReplys:function(){
+            // axios.get()
+        },
+        
+        toggleReplyInput:function(){
+            this.showReplyInput=!this.showReplyInput;
+        }
+    },
+    components:{
+        Avatar,
+        ReplyInput
+    }
+};
+</script>
+
+<style lang="less">
+    .single_reply_content{
+        min-height: 30px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        .user_name{
+            font-size:12px;
+            margin:0 8px;
+        }
+        span{
+            font-size: 12px;
+        }
+        .reply{
+            padding:0 .5em;
+            font-size: 12px;
+            color:#779e00;
+        }
+    }
+</style>

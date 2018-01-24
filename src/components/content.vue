@@ -9,6 +9,7 @@
 import axios from "axios";
 import Chapter from "./chapter.vue";
 import Editor from "./editor";
+import Bus from "./bus"
 
 export default {
   data() {
@@ -18,6 +19,7 @@ export default {
   },
   mounted() {
     this.fetchChapters();
+    Bus.$on("refresh",this.fetchChapters)
   },
   methods: {
     fetchChapters: function() {

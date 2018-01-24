@@ -35,12 +35,12 @@ router.post("/publish",function(req,res,next){
     // _User.findById()
     //需要登录 取cUid
     var UID=req.cookies.UID||"";
-    var targetId=info.targetId;
+    var targetUser=info.targetUser;
     Comment.findById(info.commentId).then(function(_com){
         console.log("查询comment成功");
         return Promise.all([
             _User.findById(UID),
-            _User.findById(targetId),
+            _User.findById(targetUser),
             _com
         ])
     }).spread(function(cUser,tUser,_com){

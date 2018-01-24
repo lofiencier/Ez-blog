@@ -8,32 +8,34 @@
 </template>
 
 <script>
-import { getCookie } from "./util";
-import axios from "axios";
+import { getCookie } from "./util"
+import axios from "axios"
+import Bus from './bus'
 
 export default {
   props: ["chapId","targetId","closeBox"],
   methods: {
     submitHandler: function(e) {
+      var that=this;
       e = e || window.event;
       e.preventDefault();
       var form = e.currentTarget;
-      var content = form.content.value;
+      var content = form.content.value; 
       //   var UID=getCookie("UID")||"";
     //   console.log(this.targetId,this.chapId)
-      axios.post("/comment/publish", {
+      if(this.chapId&&this.targetId){
+        axios.post("/comment/publish", {
         chapterId: this.chapId,
         targetId: this.targetId,
         content:content
       }).then(function(res){
-        //   if(re)
-        console.log(res.data.status);
         if(res.data.status==="200"){
+            that.$emit('toggle');
             form.content.value='';
-            this.closeBox();
-
+            Bus.$emit('refresh',"TIME TO REFRESH");
         }
       })
+      }
       return false;
     }
   }
