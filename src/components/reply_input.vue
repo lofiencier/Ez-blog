@@ -1,7 +1,7 @@
 <template>
   <div class="reply_content">
       <form class="reply_form" autocomplete="false" @submit="submitHandler">
-          <input type="text" class="reply_input" placeholder="写点什么吧..." name="content">
+          <input type="text" class="reply_input" :placeholder="'@'+targetUser.nickname+':'" name="content">
           <input type="submit" class="reply_submit" value="回复">
           <input type="hidden" name="commentId" :value="this.commentId">
       </form>
@@ -20,7 +20,7 @@ export default {
       var content = form.content.value;
       var commentId=form.commentId.value;
       this.postReply({
-        content,commentId,targetUser:this.targetUser
+        content,commentId,targetUser:this.targetUser._id
       },e.currentTarget);
       return false;
     },
@@ -42,7 +42,7 @@ export default {
 <style lang="less">
 .reply_content {
   width: 100%;
-  height: auto;
+  min-height: 30px;
   .reply_form {
     display: flex;
     height: 28px;

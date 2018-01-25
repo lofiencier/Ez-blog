@@ -13,7 +13,7 @@ router.get('/', function (req, res, next) {
             msg:`Please login first,UID=${UID}`
         })
     }else{
-        Chapter.find({creator:UID}).populate({
+        Chapter.find({creator:UID}).sort({"createTime":-1}).populate({
             path:"comments",
             // select:"-_id",
             populate:[{ 

@@ -25,7 +25,7 @@ router.get("/",function(req,res,next){
 })
 
 //commentId,targetId
-//同时通知beReplyer被回复了___消息机制
+//同时通知beReplyer被回复了___消息机制,待续
 router.post("/publish",function(req,res,next){
     var info=req.body;
     var _reply=new Reply({

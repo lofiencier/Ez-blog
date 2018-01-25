@@ -15,7 +15,7 @@
   <div class="replys_content" v-if="comment.beReplied.length">
     <SingleReply v-for="reply in comment.beReplied" :key="reply._id" :reply="reply" :top="comment.creator" :commentId="comment._id"/>
   </div>
-  <ReplyInput v-if="showReplyInput" :targetUser="comment.creator._id" :commentId="comment._id" @toggle="toggleReplyInput"/>
+  <ReplyInput v-if="showReplyInput" :targetUser="comment.creator" :commentId="comment._id" @toggle="toggleReplyInput"/>
   </div>
   
 </template>
@@ -65,7 +65,6 @@ export default {
   
 }
 .replys_content{
-    
     margin:0 2em;
     overflow: hidden;
   }
