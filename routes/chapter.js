@@ -6,7 +6,7 @@ var _User = schemas.User;
 var Chapter=schemas.Chapter;
 
 router.get('/', function (req, res, next) {
-    var UID=req.cookies.UID||"";
+    var UID=req.query.UID;
     if (!UID){
         res.send({
             status:"503",
@@ -68,8 +68,43 @@ router.post("/publish",function(req,res,next){
     })
     // console.log(req.cookies.UID);
     // res.send("");
-})
-router.post("/delete",function(req,res,next){
+});
 
+//chapId,
+router.post("/delete",function(req,res,next){
+    var UID=req.cookies.UID;
+    var chapId=req.body.chapId;
+    _User.findById(UID).then(function(user){
+        // res.send(user);
+        //找到自己,遍历此chaps
+        //找到某篇文章,从user删除，update此user
+        //remove此文章
+        
+        console.log("找到用户"+UID);
+        for (let index in user.chapters){
+            if(chapId==user.chapters[index]){
+                //remove此文章id
+                // user.chapters[id]
+                user.chapters.splice(index,1);
+                console.log("找到User内指定Chap，跳出循环"+index)
+                break;
+            }
+        };
+        console.log("这个的执行顺序不见得在前面吧")
+        return Promise.all([Chapter.findById(chapId),user.save()])
+    }).spread(function(chap,user){
+        console.log("User更新完成，chap查找完成");
+        return Promise.all([_User.findById(UID),chap.remove()])
+    }).spread(function(user,chap){
+        res.send({
+            status:'200',
+            data:user
+        })
+    })
 })
 module.exports=router;
+
+//nest
+//删除user，user创建的chaps/comments/replies要删除 
+//删除chap，user里的chaps要删除
+///

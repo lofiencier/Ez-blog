@@ -5,7 +5,7 @@
         <div class="controls">
           <More msg="More"/>
           <span><a href="javascript:void(0)">编辑</a></span>
-          <span><a href="#">删除</a></span>
+          <span><a href="javascript:void(0)" @click="delHandler" :data-id="chap._id">删除</a></span>
           <span><a href="javascript:void(0)" @click="toggleComment">{{showInputBox?"取消":"评论"}}</a></span>
         </div>
         <div class="comment_wrap" v-if="showInputBox||chap.comments.length>0">
@@ -19,6 +19,8 @@
 import Comments from "./comments.vue"
 import CommentBox from "./comment_input"
 import More from "./more"
+import axios from "axios"
+import Bus from "./bus"
 export default {
   props:["chap"],
   data() {
@@ -35,6 +37,19 @@ export default {
   methods:{
     toggleComment:function(){
       this.showInputBox=!this.showInputBox;
+    },
+    delHandler:function(e){
+      var chapId=e.currentTarget.getAttribute("data-id");
+      this.delChap(chapId);
+    },
+    delChap:function(id){
+      axios.post("/chapter/delete",{
+        chapId:id
+      }).then(function(result){
+        // console.log(result.data.)
+        Bus.$emit("refresh");
+        Bus.$emit("popup",result.date.msg)
+      })
     }
   }
   

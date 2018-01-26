@@ -2,7 +2,7 @@
   <div class="single_comment_content">
     <div class="single_comment">
     <Avatar size="16px" shape="circle"/>
-    <a :href="'#/user?id='+comment.creator._id" class="user_name">
+    <a :href="'#/user/'+comment.creator._id" class="user_name">
       <strong>{{comment.creator.nickname}}:</strong>
     </a>
     <!-- <span><small>评论</small></span> -->

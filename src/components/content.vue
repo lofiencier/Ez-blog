@@ -14,16 +14,20 @@ import Bus from "./bus"
 export default {
   data() {
     return {
-      chapters: []
+      //  id:''
+      chapters:[]
     };
   },
+  props:["UID"],
   mounted() {
     this.fetchChapters();
     Bus.$on("refresh",this.fetchChapters)
   },
   methods: {
     fetchChapters: function() {
-      axios.get("/chapter").then(res => {
+      //这里有问题
+      var _this=this;
+      axios.get("/chapter",{params:{UID:_this.UID}}).then(res => {
         this.chapters = res.data.chaps;
       });
     }

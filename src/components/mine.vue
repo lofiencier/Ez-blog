@@ -2,7 +2,7 @@
   <!-- <Header/> -->
   <section class="root_content">
     <Avatar imgUrl="./static/images/avatar.jpg" size="100px" :style="{'flex':'1 0 auto'}"/>
-    <Content/>
+    <Content :UID="UID"/>
   </section>
 </template>
 
@@ -10,14 +10,18 @@
 import Header from "./header.vue"
 import Content from "./content.vue"
 import Avatar from "./avatar.vue"
+import {getCookie} from "./util"
 export default {
   name: 'Mine',
   data () {
     return {
-      
+      UID:""
     }
   },
- 
+  mounted(){
+    var UID=getCookie("UID");
+    this.UID=UID;
+  },
   components:{
     Header,Content,Avatar
   }
