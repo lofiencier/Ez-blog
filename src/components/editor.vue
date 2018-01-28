@@ -1,9 +1,17 @@
 <template>
     <div class="editor_root_content">
         <div class="wrap">
-          <input type="text" placeholder="标题(可不填)" class="editor_title" autocomplete="flase" v-model="title">
+          <el-input
+            placeholder="写点什么吧..."
+            v-model="title"
+            clearable>
+          </el-input>
           <div id="editorElem" style="text-align:left"></div>
-          <button @click="postToDB">提交</button>
+          <div class="post_area">
+            <!-- <span class="size_limit"><sup>10</sup>/<small>28</small></span> -->
+            <el-button type="primary" size="medium" :disabled="canPublish" @click="postToDB"  ref="button">发布</el-button>
+          </div>
+          
         </div>
     </div>
 </template>
@@ -19,7 +27,7 @@ export default {
     return {
       editorContent: "",
       title: "",
-      eidtor:new Object
+      eidtor: new Object()
     };
   },
   methods: {
@@ -28,8 +36,7 @@ export default {
       var content = this.editorContent;
       // console.log(this);
       var title = this.title;
-      var _this =this;
-      console.log(this.eidtor);
+      var _this = this;
       if (content && title) {
         axios
           .post("/chapter/publish", {
@@ -38,24 +45,38 @@ export default {
           })
           .then(function(result) {
             if (result.data.status === "200") {
-              Bus.$emit("refresh");
-              _this.editor.txt.html('');
-              Bus.$emit("popup",result.data.msg);
+              Bus.$emit("refresh",result.data.msg);
+              _this.editor.txt.html("");
+              _this.title='';
+              // Bus.$emit("popup", result.data.msg);
             }
           });
-      }else{
+      } else {
         console.warn("HERE SHOW YOUR BOX_E");
-        Bus.$emit("popup","缺少参数");
+        Bus.$emit("popup", "缺少参数");
       }
     }
   },
   mounted() {
     var editor = new E("#editorElem");
     editor.customConfig.onchange = html => {
+      //需要写个正则?
+      
       this.editorContent = html;
     };
+    // editor.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片
+    editor.customConfig.showLinkImg = false;
     editor.create();
-    this.editor=editor;
+    this.editor = editor;
+  },
+  computed:{
+    canPublish:function(){
+      if(this.editorContent.length>0&&this.title.length>0){
+        return false
+      }else{
+        return true
+      }
+    }
   }
 };
 </script>
@@ -77,6 +98,24 @@ export default {
     top: 0px;
     border-top: 25px solid rgb(255, 255, 255);
     border-left: 25px solid transparent;
+  }
+  .post_area{
+    margin-top: 20px;
+    display: flex;
+    // align-items: right;
+    justify-content: flex-end;
+    .size_limit{
+      margin:0 20px;
+      font-size: 32px;
+      color:#9c9c9c;
+      sup{
+        font-size:20px;
+        color:#779e00;
+      }
+      small{
+        font-size: 20px;
+      }
+    }
   }
 }
 .editor_title {

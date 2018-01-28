@@ -16,7 +16,7 @@ export default {
       UID: ""
     };
   },
-  mounted() {
+  created() {
     // console.log(this.$route.params.id)
     this.UID=this.$route.params.id;
   },

@@ -4,6 +4,7 @@ import Mine from '@/components/mine'
 import Discover from "@/components/discover"
 import Sign from "@/components/sign"
 import User from "@/components/user"
+import Personal from "@/components/personal"
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path:"/user/:id",
       name:"User",
       component:User
+    },
+    {
+      path:"/personal",
+      name:"Personal",
+      component:Personal
     }
   ]
 })

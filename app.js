@@ -21,6 +21,7 @@ var _test=require("./routes/test");
 var chapter=require("./routes/chapter");
 var comment=require("./routes/comment");
 var reply =require("./routes/reply");
+var upload =require("./routes/upload");
 var app = express();
 
 // view engine setup
@@ -43,6 +44,7 @@ app.use("/test",_test);
 app.use("/chapter",chapter);
 app.use("/comment",comment);
 app.use("/reply",reply);
+app.use("/upload",upload);
 
 
 // catch 404 and forward to error handler

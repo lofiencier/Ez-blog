@@ -1,7 +1,7 @@
 <template>
   <div class="content">
       <Editor/>
-      <Chapter v-for="chap of chapters" :key="chap.id" :chap="chap"/>
+      <Chapter v-for="chap of chapters" :key="chap.id" :chap="chap" :del="true"/>
   </div>
 </template>
 
@@ -21,14 +21,18 @@ export default {
   props:["UID"],
   mounted() {
     this.fetchChapters();
-    Bus.$on("refresh",this.fetchChapters)
+    Bus.$on("refresh",this.fetchChapters);
+    console.log(this.UID);
   },
   methods: {
-    fetchChapters: function() {
+    fetchChapters: function(msg) {
       //这里有问题
       var _this=this;
       axios.get("/chapter",{params:{UID:_this.UID}}).then(res => {
         this.chapters = res.data.chaps;
+        if(msg){
+          Bus.$emit("popup",msg);
+        }
       });
     }
   },

@@ -18,7 +18,7 @@ export default {
       UID:""
     }
   },
-  mounted(){
+ created(){
     var UID=getCookie("UID");
     this.UID=UID;
   },

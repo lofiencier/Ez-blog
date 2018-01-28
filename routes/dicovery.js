@@ -8,10 +8,30 @@ var _User=schemas.User;
 
 //查询所有chapter,createTime.sort()
 router.get("/",function(req,res,next){
-    Chapter.find({}).limit(10).sort({createTime:-1}).then(function(chaps){
+    Chapter.find().sort({"createTime":-1}).populate({
+        path:"comments",
+        // select:"-_id",
+        populate:[{ 
+            path:"creator",
+            select:"nickname"
+        },{
+            path:"targetUser",
+            select:"nickname"
+        },{
+            path:"beReplied",
+            populate:[{
+                path:"replier",
+                select:"nickname"
+            },{
+                path:"beReplier",
+                select:"nickname"
+            }]
+        }]
+    }).then(function(result){
         res.send({
             status:"200",
-            chaps:chaps
+            chaps:result,
+            msg:"获取成功"
         })
     }).catch(function(err){
         res.send({

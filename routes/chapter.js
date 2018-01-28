@@ -98,7 +98,12 @@ router.post("/delete",function(req,res,next){
     }).spread(function(user,chap){
         res.send({
             status:'200',
-            data:user
+            msg:"删除成功"
+        })
+    }).catch(function(e){
+        res.send({
+            status:"503",
+            err:e
         })
     })
 })

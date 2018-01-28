@@ -1,9 +1,16 @@
 <template>
   <div class="reply_content">
       <form class="reply_form" autocomplete="false" @submit="submitHandler">
-          <input type="text" class="reply_input" :placeholder="'@'+targetUser.nickname+':'" name="content">
-          <input type="submit" class="reply_submit" value="回复">
+          <el-input
+            :placeholder="'@'+targetUser.nickname+':'" name="content"
+            v-model="content"
+            size="small"
+            autosize>
+          </el-input>
+          <el-button type="primary" size="small" native-type="submit" style="margin:0 0 0 10px">提交</el-button>
+          
           <input type="hidden" name="commentId" :value="this.commentId">
+          
       </form>
   </div>
 </template>
@@ -12,12 +19,17 @@
 import axios from "axios"
 import Bus from "./bus"
 export default {
+  data(){
+    return{
+      content:''
+    }
+  },
   methods: {
     submitHandler: function(e) {
       e=e||window.event();
       var form = e.currentTarget;
       e.preventDefault();
-      var content = form.content.value;
+      var content = this.content;
       var commentId=form.commentId.value;
       this.postReply({
         content,commentId,targetUser:this.targetUser._id
@@ -25,12 +37,12 @@ export default {
       return false;
     },
     postReply: function(info,form) {
-      console.log(info);
       var that =this;
       axios.post("/reply/publish",info).then(function(result){
         if(result.data.status==="200"){
-          Bus.$emit("refresh");
+          Bus.$emit("refresh",result.data.msg);
           that.$emit("toggle");
+          // Bus.$emit("popup",result.data.msg);
         }
       })
     }
@@ -45,8 +57,6 @@ export default {
   min-height: 30px;
   .reply_form {
     display: flex;
-    height: 28px;
-    align-items: center;
   }
   .reply_input {
     box-sizing: border-box;
