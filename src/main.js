@@ -4,7 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import '@/assets/css/theme.less'
-import {Button,Input,Checkbox, Upload, Form, FormItem} from "element-ui"
+import {Button,Input,Checkbox, Upload, Form, FormItem, Dropdown,DropdownMenu,DropdownItem} from "element-ui"
 import CollapseTransition from 'element-ui/lib/transitions/collapse-transition';
 
 Vue.config.productionTip = false
@@ -14,10 +14,13 @@ Vue.use(Checkbox);
 Vue.use(Upload);
 Vue.use(Form);
 Vue.use(FormItem);
+Vue.use(Dropdown);
+Vue.use(DropdownMenu);
+Vue.use(DropdownItem);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App }
+  components: { App}
 })

@@ -5,8 +5,8 @@ var schemas = require("../models/schemas");
 var _User = schemas.User;
 var crypto = require("crypto");
 
-router.get('/', function (req, res, next) {
-    var info=req.query;
+router.post('/', function (req, res, next) {
+    var info=req.body;
     if(info.email==undefined||info.password==undefined){
         res.send({
             status:"304",
@@ -18,12 +18,15 @@ router.get('/', function (req, res, next) {
                 "Set-Cookie":`UID=${user._id}`
             })
             res.send({
+               status:"200",
+               profile:{
                 id:user._id,
                 email:user.email,
                 nickname:user.nickname,
                 createTime:user.createTime,
                 chapterIds:user.chapterIds,
                 imgUrl:user.imgUrl
+               }
             });
         }).catch(function(e){
             res.send({

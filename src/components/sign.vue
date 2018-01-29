@@ -29,11 +29,11 @@
               </div>
               <div class="tabs_content tabs_login" v-show="tab=='login'?true:false">
                   <form action="#" id="login" method="POST" >
-                      <el-input placeholder="常用邮箱"/>
-                      <el-input placeholder="密码"/>
-                      <el-checkbox v-model="checked" style="margin-top:10px">记住我</el-checkbox>
+                      <el-input placeholder="常用邮箱" v-model="login.email" type="email" name="email" autoComplete/>
+                      <el-input placeholder="密码" v-model="login.password" type="password" name="password" autoComplete/>
+                      <el-checkbox v-model="checked" style="margin-top:10px">十天免登陆</el-checkbox>
                       <br>
-                      <el-button type="primary" size="large" style="width:100%;margin:10px 0">提交</el-button>
+                      <el-button type="primary" size="large" style="width:100%;margin:10px 0" @click="submitLogin">提交</el-button>
                   </form>
               </div>
           </div>
@@ -87,7 +87,11 @@ export default {
           pass: '',
           checkPass: ''
         },
-        tab:"signup",
+        login:{
+          email:"",
+          password:""
+        },
+        tab:"login",
         checked:'false',
         rulesSign: {
           email: [
@@ -119,6 +123,19 @@ export default {
           }
         });
       },
+      submitLogin:function(){
+        var _this=this;
+        axios.post("/login",{
+          email:this.login.email,
+          password:this.login.password
+        }).then(function({data}){
+          console.log(data);
+          if(data.status==="200"){
+            Bus.$emit('popup',"登陆成功！");
+            _this.setLoginState(data.profile);
+          }
+        })
+      },
       resetForm(formName) {
         this.$refs[formName].resetFields();
       },
@@ -126,15 +143,18 @@ export default {
         var _this=this;
         axios.post("/signup",{
               email:_this.sign.email,
-              password:_this.sign.pass
-            }).then(function(result){
-              if(result.data.status==="200"){
-                console.log(result.data);
-                localStorage.setItem("profile",JSON.stringify(result.data.profile));
-                localStorage.setItem("loged",true);
-                
+              password:_this.sign.pass,
+              nickname:_this.sign.email
+            }).then(function({data}){
+              if(data.status==="200"){
+                setLoginState(data.profile);
+                Bus.$emit('popup','注册成功!');
               }
             })
+      },
+      setLoginState:function(profile){
+        localStorage.setItem("profile",JSON.stringify(profile));
+        localStorage.setItem("loged",true);
       }
   }
 };

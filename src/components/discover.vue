@@ -35,7 +35,7 @@ export default {
       axios.get("/discovery").then(function(result){
         if(result.data.status==="200"){
           _this.chapters=result.data.chaps;
-          console.log(result.data.msg);
+          // console.log(result.data.msg);
           // Bus.$emit("popup",result.data.msg);
         }
       })
