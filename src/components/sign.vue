@@ -11,21 +11,29 @@
           </div>
           <div class="sign_tabs">
               <div class="tabs_signup tabs_content" v-show="tab=='signup'?true:false">
-                  <form action="#" id="signup" method="POST" >
-                      <el-input placeholder="常用邮箱"/>
-                      <el-input placeholder="密码"/>
-                      <el-checkbox v-model="checked" style="margin-top:10px">记住我</el-checkbox>
-                      <br>
-                      <el-button type="primary" size="large" native-type="submit" style="width:100%;margin:10px 0">提交</el-button>
-                  </form>
+                  <el-form :model="sign" id="signup" status-icon :rules="rulesSign" ref="signRule" label-width="100px" class="demo-ruleForm">
+                    <el-form-item prop="email" label-width="0px">
+                      <el-input placeholder="常用邮箱" v-model="sign.email"/>
+                    </el-form-item>
+                    <el-form-item prop="pass" label-width="0px">
+                      <el-input placeholder="请输入密码" type="password" v-model="sign.pass"/>
+                    </el-form-item>
+                    <el-form-item prop="checkPass" label-width="0px">
+                      <el-input placeholder="请再次输入密码" type="password" v-model="sign.checkPass"/>
+                    </el-form-item>
+
+                      <!-- <el-checkbox v-model="checked" style="margin-top:10px">完成后登陆</el-checkbox> -->
+                      <!-- <br> -->
+                      <el-button type="primary" size="large" style="width:100%;margin:10px 0" @click="submitForm('signRule')">提交</el-button>
+                  </el-form>
               </div>
               <div class="tabs_content tabs_login" v-show="tab=='login'?true:false">
-                  <form action="#" id="signup" method="POST" >
+                  <form action="#" id="login" method="POST" >
                       <el-input placeholder="常用邮箱"/>
                       <el-input placeholder="密码"/>
                       <el-checkbox v-model="checked" style="margin-top:10px">记住我</el-checkbox>
                       <br>
-                      <el-button type="primary" size="large" native-type="submit" style="width:100%;margin:10px 0">提交</el-button>
+                      <el-button type="primary" size="large" style="width:100%;margin:10px 0">提交</el-button>
                   </form>
               </div>
           </div>
@@ -34,20 +42,100 @@
 </template>
 
 <script>
+import Bus  from "./bus"
+import axios  from "axios"
+
 export default {
   name: "Sign",
   data() {
-    return {
-      tab: "signup",
-      checked:true
-    };
+    var checkEmail = (rule, value, callback) => {
+        console.log(value);
+        var reg= /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
+        if (!value) {
+          return callback(new Error('邮箱不能为空'));
+        }
+        setTimeout(() => {
+          if (!reg.test(value)) {
+            callback(new Error('请输入有效的邮箱'));
+          } else {
+            callback();
+          }
+        }, 1000);
+      };
+      var checkPassword = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入密码'));
+        } else {
+          if (this.sign.checkPass !== '') {
+            this.$refs.signRule.validateField('checkPass');
+          }
+          callback();
+        }
+      };
+      var recheckPassword = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (value !== this.sign.pass) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      };
+      return {
+        sign: {
+          email: '',
+          pass: '',
+          checkPass: ''
+        },
+        tab:"signup",
+        checked:'false',
+        rulesSign: {
+          email: [
+            { validator: checkEmail, trigger: 'blur' }
+          ],
+          pass: [
+            { validator: checkPassword, trigger: 'blur' }
+          ],
+          checkPass: [
+            { validator: recheckPassword, trigger: 'blur' }
+          ]
+        }
+      };
   },
   methods: {
     changeTabs: function(e) {
       e = e || window.event;
       let _this = e.currentTarget;
       this.$data.tab = e.currentTarget.getAttribute("data-t");
-    }
+    },
+    submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            // alert('submit!');
+            this.postToDB();
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
+      },
+      postToDB:function(){
+        var _this=this;
+        axios.post("/signup",{
+              email:_this.sign.email,
+              password:_this.sign.pass
+            }).then(function(result){
+              if(result.data.status==="200"){
+                console.log(result.data);
+                localStorage.setItem("profile",JSON.stringify(result.data.profile));
+                localStorage.setItem("loged",true);
+                
+              }
+            })
+      }
   }
 };
 </script>

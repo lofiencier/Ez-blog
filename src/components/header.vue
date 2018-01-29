@@ -2,7 +2,7 @@
   <header>
       <div class="header_content">
           <div class="logo">
-              <img src="" alt="">
+              <img src="static/images/logo.png" alt="">
           </div>
           <div class="nav_content">
               <span>DICOVERY</span>
@@ -17,7 +17,22 @@
 
 <script>
 export default {
-  name: "Header"
+  name: "Header",
+  data(){
+      return {
+          loged:flase
+      }
+  },
+  beforeCreated(){
+      if(loged){
+          
+      }
+  },
+  methods:{
+      isLoged:function(){
+          this.loged=localStorage.getItem("loged");
+      }
+  }
 };
 </script>
 

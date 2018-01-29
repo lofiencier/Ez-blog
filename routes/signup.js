@@ -5,9 +5,10 @@ var schemas = require("../models/schemas");
 var _User = schemas.User;
 var crypto = require("crypto");
 
-router.get('/', function (req, res, next) {
-    var info = req.query;
-    let { email, password, imgUrl } = info;
+router.post('/', function (req, res, next) {
+    var info = req.body;
+    console.log(req.body);
+    let { email, password } = info;
     _User.find({ "email": email }, function (err, users) {
         if (users.length > 0) {
             res.send({
@@ -16,20 +17,31 @@ router.get('/', function (req, res, next) {
             })
         } else {
             if (email != undefined && password != undefined) {
-                var md5sum = crypto.createHash('md5')
-                md5sum.update(req.query.password);
+                // var md5sum = crypto.createHash('md5')
+                // md5sum.update(req.body.password);
                 var newUser = new _User({
                     email: info.email,
                     nickname: info.nickname || "Anymous",
                     creatTime: info.creatTime || Date.now(),
                     chapterIds: [],
-                    imgUrl: info.imgUrl,
+                    imgUrl: info.imgUrl||"./static/images/anymous.svg",
                     password: info.password
                 });
-                newUser.save().then(() => {
+                newUser.save().then((user) => {
+                    res.set({
+                        "Set-Cookie":`UID=${user._id}`
+                    })
                     res.send({
                         status: "200",
-                        msg: "User create"
+                        msg: "User create",
+                        // user:user
+                        profile:{
+                            nickname:user.nickname,
+                            createTime:user.createTime,
+                            email:user.email,
+                            imgUrl:user.imgUrl,
+                            UID:user._id
+                        }
                     });
                 }).catch((e) => {
                     res.send({
