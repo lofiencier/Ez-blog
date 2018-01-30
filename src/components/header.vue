@@ -87,9 +87,15 @@ export default {
           // delCookie("UID");
           localStorage.setItem("loged",false);
           console.log("setlogout run");
+          var _this=this;
           axios.post("/signup/logout").then(function({data}){
+            _this.isLoged();
             Bus.$emit("popup",data.msg);
           })
+          break;
+        }
+        case "personal":{
+          this.$router.push("/personal");
           break;
         }
       }

@@ -8,6 +8,8 @@ var UserSchema=new Schema({
     chapters:[{type:Schema.Types.ObjectId,ref:"chapter"}],
     imgUrl:String,
     password:{type:String,required:true},
+    description:String,
+    
     msg:[{type:Schema.Types.ObjectId,ref:"beReply"}]
 });
 

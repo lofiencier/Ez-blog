@@ -4,7 +4,6 @@ import Mine from '@/components/mine'
 import Discover from "@/components/discover"
 import Landing from "@/components/landing"
 import User from "@/components/user"
-import Personal from "@/components/personal"
 
 Vue.use(Router)
 var router=new Router({
@@ -28,11 +27,6 @@ var router=new Router({
       path:"/user/:id",
       name:"User",
       component:User
-    },
-    {
-      path:"/personal",
-      name:"Personal",
-      component:Personal
     }
   ]
 })

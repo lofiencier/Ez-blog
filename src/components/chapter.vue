@@ -1,7 +1,7 @@
 <template>
     <div class="single_charter">
         <h1 class="title">{{chap.title}}</h1>
-        <p v-html="chap.content"></p>
+        <p v-html="chap.content" class="chapter_content"></p>
         <div class="controls">
           <More msg="More"/>
           <span><a href="javascript:void(0)">编辑</a></span>
@@ -85,7 +85,6 @@ export default {
     }
   }
   p{
-    text-indent: 2em;
     line-height: 1.5em;
     margin:0 16px;
   }
@@ -99,6 +98,16 @@ export default {
     border-top: 25px solid rgb(255, 255, 255);
     border-left: 25px solid transparent; 
     
+  }
+  .chapter_content{
+    // width:800px;
+    max-width:96%;
+    // margin:10px;
+    margin:0 auto;
+
+    img{
+      max-width:100%;
+    }
   }
 }
 .controls{

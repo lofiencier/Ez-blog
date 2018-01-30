@@ -11,7 +11,6 @@
             <!-- <span class="size_limit"><sup>10</sup>/<small>28</small></span> -->
             <el-button type="primary" size="medium" :disabled="canPublish" @click="postToDB"  ref="button">发布</el-button>
           </div>
-          
         </div>
     </div>
 </template>
@@ -45,9 +44,9 @@ export default {
           })
           .then(function(result) {
             if (result.data.status === "200") {
-              Bus.$emit("refresh",result.data.msg);
+              Bus.$emit("refresh", result.data.msg);
               _this.editor.txt.html("");
-              _this.title='';
+              _this.title = "";
               // Bus.$emit("popup", result.data.msg);
             }
           });
@@ -61,22 +60,45 @@ export default {
     var editor = new E("#editorElem");
     editor.customConfig.onchange = html => {
       //需要写个正则?
-      
+
       this.editorContent = html;
     };
     // editor.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片
-    editor.customConfig.uploadImgServer = '/upload/images'; 
+    editor.customConfig.uploadImgServer = "/upload/images";
     editor.customConfig.showLinkImg = false;
+    editor.customConfig.debug = true;
+    // editor.customConfig.uploadImgHeaders = {
+    // // 'Accept': 'text/x-json',
+    //  'Content-Type': 'multipart/form-data;boundary=----WebKitFormBoundaryWbSfsKDrlpSNdBHD'
+    // };
+    editor.customConfig.uploadFileName = "images";
+    editor.customConfig.uploadImgHooks = {
+      customInsert: function (insertImg, result, editor) {
+        // 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
+        // insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
+
+        // 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
+        if(result.status==='200'){
+          Bus.$emit("popup")
+          var url = result.url
+          insertImg(url)
+        }else{
+          Bus.$emit("err",'图片上传失败')
+        }
+
+        // result 必须是一个 JSON 格式字符串！！！否则报错
+      }
+    };
     editor.create();
     this.editor = editor;
-    console.log(this.eidtor.imgMenuId);
+    console.log(editor);
   },
-  computed:{
-    canPublish:function(){
-      if(this.editorContent.length>0&&this.title.length>0){
-        return false
-      }else{
-        return true
+  computed: {
+    canPublish: function() {
+      if (this.editorContent.length > 0 && this.title.length > 0) {
+        return false;
+      } else {
+        return true;
       }
     }
   }
@@ -101,20 +123,20 @@ export default {
     border-top: 25px solid rgb(255, 255, 255);
     border-left: 25px solid transparent;
   }
-  .post_area{
+  .post_area {
     margin-top: 20px;
     display: flex;
     // align-items: right;
     justify-content: flex-end;
-    .size_limit{
-      margin:0 20px;
+    .size_limit {
+      margin: 0 20px;
       font-size: 32px;
-      color:#9c9c9c;
-      sup{
-        font-size:20px;
-        color:#779e00;
+      color: #9c9c9c;
+      sup {
+        font-size: 20px;
+        color: #779e00;
       }
-      small{
+      small {
         font-size: 20px;
       }
     }

@@ -1,10 +1,6 @@
 <template>
   <section class="discocer_root">
-    <form action="/upload/images" method="POST" enctype="multipart/form-data">
-      <label for="images">请上传图片：</label>
-      <input type="file" name="images">
-      <input type="submit" value="确定">
-    </form>
+  
     <div class="chap_wrap" v-for="chap of chapters" :key="chap.id">
       <Avatar size="80px"/>
       <Chapter :chap="chap" :del="false"/>
