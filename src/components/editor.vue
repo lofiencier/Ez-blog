@@ -65,9 +65,11 @@ export default {
       this.editorContent = html;
     };
     // editor.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片
+    editor.customConfig.uploadImgServer = '/upload/images'; 
     editor.customConfig.showLinkImg = false;
     editor.create();
     this.editor = editor;
+    console.log(this.eidtor.imgMenuId);
   },
   computed:{
     canPublish:function(){

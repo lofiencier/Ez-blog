@@ -3,7 +3,7 @@
       <div class="sign_box">
           <div class="logo">
             <img src="static/images/logo.png" alt="">
-            <span>Lofter</span>
+            <span>LEAFTER</span>
           </div>
           <div class="sign_tabs_control">
               <a href="javascript:void(0)" :class="tab=='signup'?'active':''" @click="changeTabs" data-t="signup">注册</a>
@@ -106,6 +106,10 @@ export default {
         }
       };
   },
+  created(){
+    // console.log(this.$router.history.current.query.tab)
+    this.tab=this.$router.history.current.query.tab||"login";
+  },
   methods: {
     changeTabs: function(e) {
       e = e || window.event;
@@ -133,6 +137,8 @@ export default {
           if(data.status==="200"){
             Bus.$emit('popup',"登陆成功！");
             _this.setLoginState(data.profile);
+          }else{
+            Bus.$emit('err',"用户名或密码错误")
           }
         })
       },
@@ -155,6 +161,7 @@ export default {
       setLoginState:function(profile){
         localStorage.setItem("profile",JSON.stringify(profile));
         localStorage.setItem("loged",true);
+        this.$router.push("/");
       }
   }
 };

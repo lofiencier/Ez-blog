@@ -10,6 +10,7 @@ import {Message} from "element-ui"
 export default {
   mounted() {
     Bus.$on("popup", this.popup);
+    Bus.$on('err',this.errorHandler);
   },
   data() {
     return {
@@ -21,6 +22,12 @@ export default {
       Message.success({
           message:msg,
           center:true
+      })
+    },
+    errorHandler:function(msg){
+      Message.error({
+        message:msg,
+        center:true
       })
     }
   }

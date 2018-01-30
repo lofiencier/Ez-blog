@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Mine from '@/components/mine'
 import Discover from "@/components/discover"
-import Sign from "@/components/sign"
+import Landing from "@/components/landing"
 import User from "@/components/user"
 import Personal from "@/components/personal"
 
@@ -20,9 +20,9 @@ var router=new Router({
       component: Mine
     },
     {
-      path:"/sign",
-      name:"Sign",
-      component:Sign
+      path:"/landing",
+      name:"Landing",
+      component:Landing
     },
     {
       path:"/user/:id",

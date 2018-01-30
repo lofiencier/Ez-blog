@@ -59,6 +59,14 @@ router.post('/', function (req, res, next) {
     })
 });
 
-
+router.post("/logout",function(req,res,next){
+    if(req.cookies.UID!=undefined&&req.cookies.UID.length>0){
+        res.clearCookie("UID");
+        res.send({
+            status:"200",
+            msg:"账号已退出"
+        })
+    }
+})
 
 module.exports = router;
