@@ -6,6 +6,12 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var lessMiddleware = require('less-middleware');
 var mongoose = require("mongoose");
+var apicache = require("apicache");
+
+
+let cache = apicache.middleware;
+
+
 
 mongoose.connect("mongodb://localhost:27017/blog");
 var db=mongoose.connection;
@@ -22,11 +28,16 @@ var chapter=require("./routes/chapter");
 var comment=require("./routes/comment");
 var reply =require("./routes/reply");
 var upload =require("./routes/upload");
+var user =require("./routes/user");
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+//缓存设置
+const onlyStatus200 = (req, res) => res.statusCode === 200;
+app.use(cache("2 minutes", onlyStatus200));
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'static', 'favicon.ico')));
@@ -45,6 +56,7 @@ app.use("/chapter",chapter);
 app.use("/comment",comment);
 app.use("/reply",reply);
 app.use("/upload",upload);
+app.use("/user",user);
 
 
 // catch 404 and forward to error handler

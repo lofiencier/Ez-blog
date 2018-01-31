@@ -11,7 +11,7 @@
           <div class="avatar_content">
               <el-dropdown trigger="click" v-if="isLoged()" @command="commands">
                   <span class="el-dropdown-link">
-                      <img src="static/images/anymous.svg" alt="avatar" class="avatar_items">
+                      <img :src="imgUrl" alt="avatar" class="avatar_items">
                         <span class="avatar_items">{{nickname}}</span>
                         <i class="el-icon-arrow-down el-icon--right avatar_items"></i>
                   </span>
@@ -46,13 +46,15 @@ export default {
       loged: false,
       avatar: "",
       show:true,
-      nickname:'ANYMOUS'
+      nickname:'ANYMOUS',
+      imgUrl:"./static/images/anymous.svg"
     };
   },
   mounted(){
     if(this.$router.history.current.name==="Landing"&&this.show===true){
       this.show=false;
     }
+    Bus.$on("refreshInfo",this.setNickname);
   },
   beforeCreate() {
     var _this=this;
@@ -76,9 +78,13 @@ export default {
       //  console.log(this.loged,localStorage.getItem("loged"));
       // console.log("it runs!!",getCookie("UID"))
       if(this.loged){
-       this.nickname=JSON.parse(localStorage.getItem("profile")).nickname;
+       this.setNickname();
       }
        return this.loged;
+    },
+    setNickname:function(){
+      this.nickname=JSON.parse(localStorage.getItem("profile")).nickname;
+       this.imgUrl=JSON.parse(localStorage.getItem("profile")).imgUrl;
     },
     commands:function(command){
       switch(command){
@@ -97,6 +103,7 @@ export default {
         case "personal":{
           // this.$router.push("/personal");
           Bus.$emit("showInfoChange");
+          Bus.$emit("refreshInfo");
           break;
         }
       }

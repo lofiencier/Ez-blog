@@ -7,6 +7,7 @@ var crypto = require("crypto");
 
 router.post('/', function (req, res, next) {
     var info=req.body;
+    var cookie=req.cookies.UID;
     if(info.email==undefined||info.password==undefined){
         res.send({
             status:"304",
@@ -14,9 +15,18 @@ router.post('/', function (req, res, next) {
         });
     }else{
         _User.findOne({"email":info.email,"password":info.password}).then(function(user){
-            res.set({
-                "Set-Cookie":`UID=${user._id}`
-            })
+            // res.set({
+            //     "Set-Cookie":`UID=${user._id}`
+            // });
+            // console.log(user._id.toString());
+            if(!cookie&&info.rememberLogin){
+                console.log("Remember");
+             res.cookie("UID",user._id.toString(),{maxAge:1000*60*60*24*10});
+                
+            }else if(!info.rememberLogin){
+                console.log("NotRemember");
+                res.cookie("UID",user._id.toString());
+            }
             res.send({
                status:"200",
                profile:{

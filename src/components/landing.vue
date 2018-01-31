@@ -31,7 +31,7 @@
                   <form action="#" id="login" method="POST" >
                       <el-input placeholder="常用邮箱" v-model="login.email" type="email" name="email" autoComplete/>
                       <el-input placeholder="密码" v-model="login.password" type="password" name="password" autoComplete/>
-                      <el-checkbox v-model="checked" style="margin-top:10px">十天免登陆</el-checkbox>
+                      <el-checkbox v-model="rememberLogin" style="margin-top:10px">十天免登陆</el-checkbox>
                       <br>
                       <el-button type="primary" size="large" style="width:100%;margin:10px 0" @click="submitLogin">提交</el-button>
                   </form>
@@ -92,7 +92,7 @@ export default {
           password:""
         },
         tab:"login",
-        checked:'false',
+        rememberLogin:true,
         rulesSign: {
           email: [
             { validator: checkEmail, trigger: 'blur' }
@@ -131,7 +131,8 @@ export default {
         var _this=this;
         axios.post("/login",{
           email:this.login.email,
-          password:this.login.password
+          password:this.login.password,
+          rememberLogin:this.rememberLogin
         }).then(function({data}){
           console.log(data);
           if(data.status==="200"){
