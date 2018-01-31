@@ -79,7 +79,7 @@ export default {
 
         // 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
         if(result.status==='200'){
-          Bus.$emit("popup")
+          Bus.$emit("popup",result.msg);
           var url = result.url
           insertImg(url)
         }else{

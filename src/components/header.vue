@@ -95,7 +95,8 @@ export default {
           break;
         }
         case "personal":{
-          this.$router.push("/personal");
+          // this.$router.push("/personal");
+          Bus.$emit("showInfoChange");
           break;
         }
       }
