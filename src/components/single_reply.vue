@@ -1,7 +1,7 @@
 <template>
     <div class="single_reply_content">
         <div class="single_reply_wrap">
-            <Avatar size="16px" shape="circle"/>
+            <Avatar size="16px" shape="circle" :imgUrl="reply.replier.imgUrl"/>
             <a :href="'#/user/'+reply.replier._id" class="user_name">
             <strong>{{reply.replier.nickname}}:</strong>
             </a>
@@ -10,7 +10,7 @@
             </a>
             <span>{{reply.content}}</span>
             <a href="javascript:void(0)" class="reply" @click="toggleReplyInput" :data-id="reply.replier._id">{{showReplyInput?"取消":"回复"}}</a> 
-            <a href="javascript:void(0)" class="reply">删除</a>
+            <a href="javascript:void(0)" class="reply">{{me===reply.replier._id?"删除":""}}</a>
         </div>
         <ReplyInput v-if="showReplyInput" :targetUser="reply.replier" :commentId="commentId" @toggle="toggleReplyInput"/>
     </div>
@@ -20,6 +20,7 @@
 import Avatar from "./avatar";
 import axios from "axios";
 import ReplyInput from "./reply_input";
+import {getCookie} from "./util"
 
 export default {
   props: ["reply", "top", "commentId"],
@@ -30,8 +31,13 @@ export default {
   data() {
     return {
       replys: [],
+      me:"",
       showReplyInput: false
     };
+  },
+   created() {
+    this.me = getCookie("UID");
+    console.log(this.imgUrl);
   },
   methods: {
     fetchReplys: function() {

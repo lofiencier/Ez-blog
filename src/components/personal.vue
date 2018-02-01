@@ -144,6 +144,7 @@ export default {
 <style lang="less">
 .personal_content {
   position: fixed;
+  z-index:100000;
   top: 0;
   left: 0;
   width: 100%;

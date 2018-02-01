@@ -154,7 +154,7 @@ export default {
               nickname:_this.sign.email
             }).then(function({data}){
               if(data.status==="200"){
-                setLoginState(data.profile);
+                _this.setLoginState(data.profile);
                 Bus.$emit('popup','注册成功!');
               }
             })

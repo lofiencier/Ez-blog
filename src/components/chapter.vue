@@ -1,10 +1,9 @@
 <template>
-    <div class="single_charter">
+    <div :class="noAngle?'single_charter no_angle':'single_charter'">
         <h1 class="title">{{chap.title}}</h1>
         <p v-html="chap.content" class="chapter_content"></p>
         <div class="controls">
           <More msg="More"/>
-          <span><a href="javascript:void(0)">编辑</a></span>
           <span><a href="javascript:void(0)" @click="delHandler" :data-id="chap._id" v-if="del">删除</a></span>
           <span><a href="javascript:void(0)" @click="toggleComment">{{showInputBox?"取消":"评论"}}</a></span>
         </div>
@@ -22,7 +21,7 @@ import More from "./more"
 import axios from "axios"
 import Bus from "./bus"
 export default {
-  props:["chap","del","angle"],
+  props:["chap","del","noAngle"],
   data() {
     return {
       showInputBox:false
@@ -127,5 +126,9 @@ export default {
   height: auto;
   margin:20px 20px;
   border-top: 1px solid rgb(238, 238, 238);
+}
+
+.single_charter.no_angle::before{
+  content:none;
 }
 </style>

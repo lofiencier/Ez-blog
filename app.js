@@ -36,8 +36,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 //缓存设置
-const onlyStatus200 = (req, res) => res.statusCode === 200;
-app.use(cache("2 minutes", onlyStatus200));
+const onlyStatus200 = (req, res)=>{
+  
+  return res.statusCode===200
+}
+// app.use(cache("2 minutes", onlyStatus200));
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'static', 'favicon.ico')));

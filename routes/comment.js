@@ -45,7 +45,8 @@ router.post('/publish',function(req,res,next){
         console.log("文章保存完成");
         res.send({
             status:"200",
-            msg:"评论成功"
+            msg:"评论成功",
+            createTime:Date.now()
         })
     }).catch(function(e){
         console.log("SOMETHING BROKE:",e);

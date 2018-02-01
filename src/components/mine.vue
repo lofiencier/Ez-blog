@@ -1,7 +1,6 @@
 <template>
-  <!-- <Header/> -->
   <section class="root_content">
-    <Avatar imgUrl="./static/images/avatar.jpg" size="100px" :style="{'flex':'1 0 auto'}"/>
+    <Avatar :imgUrl="imgUrl" size="100px"  shape="circle" style="{flex:0 0 auto}"  :border="{width:'4px',color:'white'}"/>
     <Content :UID="UID"/>
   </section>
 </template>
@@ -15,12 +14,17 @@ export default {
   name: 'Mine',
   data () {
     return {
-      UID:""
+      UID:"",
+      imgUrl:"./static/images/anymous.svg"
     }
   },
  created(){
     var UID=getCookie("UID");
     this.UID=UID;
+    var imgUrl=JSON.parse(localStorage.getItem("profile")).imgUrl;
+    if(imgUrl){
+      this.imgUrl=imgUrl;
+    }
   },
   components:{
     Header,Content,Avatar

@@ -35,7 +35,8 @@ export default {
       //   console.log(this.targetId,this.chapId)
       if (this.chapId && this.targetId) {
         axios
-          .post("/comment/publish", {
+          .post(`/comment/publish`, {
+            timestamp:Date.now(),
             chapterId: this.chapId,
             targetId: this.targetId,
             content: content
@@ -45,7 +46,6 @@ export default {
               that.$emit("toggle");
               that.content="";
               Bus.$emit("refresh",res.data.msg);
-              // Bus.$emit("popup", res.data.msg);
             }
           });
       }

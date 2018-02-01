@@ -18,7 +18,7 @@ router.get('/', function (req, res, next) {
             // select:"-_id",
             populate:[{ 
                 path:"creator",
-                select:"nickname"
+                select:"nickname imgUrl"
             },{
                 path:"targetUser",
                 select:"nickname"
@@ -26,7 +26,7 @@ router.get('/', function (req, res, next) {
                 path:"beReplied",
                 populate:[{
                     path:"replier",
-                    select:"nickname"
+                    select:"nickname imgUrl"
                 },{
                     path:"beReplier",
                     select:"nickname"
