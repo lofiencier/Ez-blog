@@ -25,7 +25,6 @@ router.post('/images', function (req, res) {
         else {
 
             console.log('parse files: ' + filesTmp);
-            console.log(files);
             var inputFile = files.images[0];
             var uploadedPath = inputFile.path;
             var dstPath = './static/upload/images/' + inputFile.originalFilename;

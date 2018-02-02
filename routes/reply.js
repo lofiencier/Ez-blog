@@ -68,4 +68,34 @@ router.post("/publish",function(req,res,next){
     
 })
 
+//commentId,replyId
+router.post("/delete",function(req,res,next){
+    let {commentId,replyId}=req.body;
+    Comment.findById(commentId).populate({
+        path:"beReplied",
+        select:"_id"
+    }).then(function(_com){
+        // console.log(_com.beReplied[0]._id.toString()===replyId);
+        let {beReplied}=_com;
+        for(var i in beReplied){
+            if(beReplied[i]._id.toString()===replyId){
+                console.log("找到匹配回复位置",i);
+                _com.beReplied.splice(i,1);
+                return Promise.all([_com.save(),Reply.findByIdAndRemove(replyId)]);
+                break;
+            }
+        }
+    }).spread(function(_com,_reply){
+        res.send({
+            status:"200",
+            msg:"删除评论成功",
+            reply:_reply
+        })
+    }).catch(function(err){
+        res.send({
+            status:"504",
+            err:err
+        })
+    })
+})
 module.exports=router;

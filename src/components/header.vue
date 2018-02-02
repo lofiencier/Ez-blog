@@ -97,6 +97,7 @@ export default {
           axios.post("/signup/logout").then(function({data}){
             _this.isLoged();
             Bus.$emit("popup",data.msg);
+            localStorage.setItem("loged",false);
           })
           break;
         }

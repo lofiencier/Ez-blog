@@ -10,7 +10,7 @@
             </a>
             <span>{{reply.content}}</span>
             <a href="javascript:void(0)" class="reply" @click="toggleReplyInput" :data-id="reply.replier._id">{{showReplyInput?"取消":"回复"}}</a> 
-            <a href="javascript:void(0)" class="reply">{{me===reply.replier._id?"删除":""}}</a>
+            <a href="javascript:void(0)" class="del" @click="delReply(commentId,reply._id)">{{me===reply.replier._id?"删除":""}}</a>
         </div>
         <ReplyInput v-if="showReplyInput" :targetUser="reply.replier" :commentId="commentId" @toggle="toggleReplyInput"/>
     </div>
@@ -21,6 +21,7 @@ import Avatar from "./avatar";
 import axios from "axios";
 import ReplyInput from "./reply_input";
 import {getCookie} from "./util"
+import Bus from "./bus"
 
 export default {
   props: ["reply", "top", "commentId"],
@@ -37,13 +38,22 @@ export default {
   },
    created() {
     this.me = getCookie("UID");
-    console.log(this.imgUrl);
+    // console.log(this.imgUrl);
   },
   methods: {
     fetchReplys: function() {
       // axios.get()
     },
+    delReply:function(commentId,replyId){
+      console.log(commentId,replyId);
+      axios.post("/reply/delete",{commentId,replyId}).then(function({data}){
+        // console.log(data);
+        if(data.status==="200"){
+          Bus.$emit("refresh",data.msg+"两次都是你？");
 
+        }
+      })
+    },
     toggleReplyInput: function() {
       this.showReplyInput = !this.showReplyInput;
     }
@@ -71,7 +81,7 @@ export default {
   span {
     font-size: 12px;
   }
-  .reply {
+  .reply,.del {
     padding: 0 0.5em;
     font-size: 12px;
     color: #779e00;

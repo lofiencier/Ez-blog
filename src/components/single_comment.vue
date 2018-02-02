@@ -36,7 +36,7 @@ export default {
   },
   created() {
     this.me = getCookie("UID");
-    console.log(this.imgUrl);
+    // console.log(this.imgUrl);
   },
   components: {
     Avatar,
