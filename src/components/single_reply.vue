@@ -40,6 +40,7 @@ export default {
     this.me = getCookie("UID");
     // console.log(this.imgUrl);
   },
+
   methods: {
     fetchReplys: function() {
       // axios.get()
@@ -49,6 +50,7 @@ export default {
       axios.post("/reply/delete",{commentId,replyId}).then(function({data}){
         // console.log(data);
         if(data.status==="200"){
+          console.log("这里运行多少次?")
           Bus.$emit("refresh",data.msg+"两次都是你？");
 
         }

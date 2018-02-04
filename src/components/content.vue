@@ -23,6 +23,9 @@ export default {
     this.fetchChapters();
     Bus.$on("refresh",this.fetchChapters);
   },
+  beforeDestroy(){
+    Bus.$off("refresh",this.fetchChapters);
+  },
   methods: {
     fetchChapters: function(msg) {
       //这里有问题

@@ -23,6 +23,7 @@
 
 <script>
 import Avatar from "./avatar";
+import axios from "axios"
 import { getCookie } from "./util";
 import ReplyInput from "./reply_input"
 import SingleReply from "./single_reply"
@@ -46,6 +47,9 @@ export default {
   methods: {
     toggleReplyInput: function() {
       this.showReplyInput = !this.showReplyInput;
+    },
+    delReply:function(){
+      
     }
   }
 };

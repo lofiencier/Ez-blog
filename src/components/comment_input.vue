@@ -45,7 +45,7 @@ export default {
             if (res.data.status === "200") {
               that.$emit("toggle");
               that.content="";
-              Bus.$emit("refresh",res.data.msg);
+              Bus.$emit("refresh",res.data.msg+"是你发了三次?");
             }
           });
       }

@@ -1,7 +1,7 @@
 <template>
   <section class="discocer_root">
     <div class="chap_wrap" v-for="chap of chapters" :key="chap.id">
-      <a :href="'#/user?id='+chap.creator._id" class="chap_avatar">
+      <a :href="'#/user/'+chap.creator._id" class="chap_avatar">
         <Avatar size="80px" :imgUrl="chap.creator.imgUrl" shape="circle"/>
         <span class="nickname">{{chap.creator.nickname}}</span>
       </a>
@@ -25,6 +25,9 @@ export default {
     this.fetchChapters();
     Bus.$on("refresh",this.fetchChapters);
   },
+  beforeDestroy () {
+    Bus.$off("refresh",this.fetchChapters);
+  },
   methods:{
     fetchChapters:function(msg){
       var _this=this;
@@ -33,6 +36,7 @@ export default {
           _this.chapters=result.data.chaps;
           // console.log(result.data.msg);
           if(msg){
+            console.log("这里触发了多少次？");
             Bus.$emit("popup",msg);
           }
         }
@@ -47,27 +51,31 @@ export default {
 </script>
 
 <style lang="less">
-  .discocer_root{
-    max-width:1000px;
-    margin:40px auto;
-    height: auto;
-    .chap_wrap{
-      display: flex;
-      margin:40px 0;
-      .single_charter{
-        // margin-left: 40px;
-        margin:0 0 0 40px;
-      }
-    }
-    .chap_avatar{
-      text-align: center;
-      font-weight: bold;
-      font-size: 14px;
-      .nickname{
-        display: block;
-        margin-top: 10px;
-        color:#737775;
-      }
+.discocer_root {
+  max-width: 1000px;
+  margin: 40px auto;
+  height: auto;
+  .chap_wrap {
+    display: flex;
+    margin: 40px 0;
+    .single_charter {
+      // margin-left: 40px;
+      margin: 0 0 0 40px;
     }
   }
+  .chap_avatar {
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+    max-height: 140px;
+    .nickname {
+      display: block;
+      margin-top: 10px;
+      color: #737775;
+    }
+    .avatar {
+      margin: 0 auto;
+    }
+  }
+}
 </style>
