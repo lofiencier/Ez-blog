@@ -2,7 +2,7 @@
     <div class="editor_root_content">
         <div class="wrap">
           <el-input
-            placeholder="写点什么吧..."
+            placeholder="标题..."
             v-model="title"
             clearable>
           </el-input>

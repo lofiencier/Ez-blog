@@ -8,7 +8,7 @@
           <span><a href="javascript:void(0)" @click="toggleComment">{{showInputBox?"取消":"评论"}}</a></span>
         </div>
         <div class="comment_wrap" v-if="showInputBox||chap.comments.length>0">
-          <Comments :comments="chap.comments" v-if="chap.comments.length"/>
+          <Comments :comments="chap.comments" v-if="chap.comments.length" :chapId="chap._id"/>
           <CommentBox v-if="showInputBox" :chapId="chap._id" :targetId="chap.creator" @toggle="toggleComment"/>
         </div>
     </div>

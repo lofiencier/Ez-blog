@@ -7,7 +7,6 @@ var mongoose = require("mongoose");
 var schemas = require("../models/schemas");
 var _User = schemas.User;
 var Chapter=schemas.Chapter;
-var moment=require("moment");
 
 router.post("/",function(req,res,next){
     var uid=req.body.UID;
