@@ -25,6 +25,7 @@ router.post('/publish',function(req,res,next){
     var _comment=new Comment({
         content:req.body.content,
         createTime:Date.now(),
+        chapterId:chapterId
     })
     Chapter.findById(chapterId).then(function(_cha){
         console.log("chapter查询完成");

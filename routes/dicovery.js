@@ -8,33 +8,46 @@ var _User=schemas.User;
 
 //查询所有chapter,createTime.sort()
 router.get("/",function(req,res,next){
-    Chapter.find().sort({"createTime":-1}).populate([{
-        path:"comments",
-        // select:"-_id",
-        populate:[{ 
-            path:"creator",
-            select:"nickname imgUrl"
-        },{
-            path:"targetUser",
-            select:"nickname"
-        },{
-            path:"beReplied",
-            populate:[{
-                path:"replier",
+    var limit=req.body.limit||10;
+    var offset=req.body.offset||0;
+    var options = {
+        // select:   'title date author',
+        sort:     { createTime: -1 },
+        populate: [{
+            path:"comments",
+            // select:"-_id",
+            populate:[{ 
+                path:"creator",
                 select:"nickname imgUrl"
             },{
-                path:"beReplier",
+                path:"targetUser",
                 select:"nickname"
+            },{
+                path:"beReplied",
+                populate:[{
+                    path:"replier",
+                    select:"nickname imgUrl"
+                },{
+                    path:"beReplier",
+                    select:"nickname"
+                }]
             }]
-        }]
-    },{
-        path:"creator",
-        select:"nickname imgUrl"
-    }]).then(function(result){
+        },{
+            path:"creator",
+            select:"nickname imgUrl"
+        }],
+        lean:     true,
+        offset:   offset, 
+        limit:    limit
+    };
+    Chapter.paginate({},options).then(function(result){
         res.send({
             status:"200",
-            chaps:result,
-            msg:"获取成功"
+            chaps:result.docs,
+            msg:"获取成功",
+            total:result.total,
+            offset:result.offset,
+            limit:result.limit
         })
     }).catch(function(err){
         res.send({

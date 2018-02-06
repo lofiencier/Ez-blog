@@ -30,7 +30,8 @@ router.post("/publish",function(req,res,next){
     var info=req.body;
     var _reply=new Reply({
         content:info.content,
-        createTime:info.createTime    
+        createTime:info.createTime,
+        chapterId:info.chapterId    
     });
     // _User.findById()
     //需要登录 取cUid

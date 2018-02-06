@@ -32,7 +32,7 @@ export default {
       var content = this.content;
       var commentId=form.commentId.value;
       this.postReply({
-        content,commentId,targetUser:this.targetUser._id
+        content,commentId,targetUser:this.targetUser._id,chapterId:this.chapId
       },e.currentTarget);
       return false;
     },
@@ -47,7 +47,7 @@ export default {
       })
     }
   },
-  props: ["creator", "targetUser","commentId"]
+  props: ["creator", "targetUser","commentId","chapId"]
 };
 </script>
 

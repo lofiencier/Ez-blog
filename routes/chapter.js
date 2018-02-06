@@ -4,6 +4,8 @@ var mongoose = require("mongoose");
 var schemas = require("../models/schemas");
 var _User = schemas.User;
 var Chapter=schemas.Chapter;
+var Reply=schemas.Reply;
+var Comment=schemas.Comment;
 
 router.get('/', function (req, res, next) {
     var UID=req.query.UID;
@@ -91,16 +93,31 @@ router.post("/delete",function(req,res,next){
             }
         };
         console.log("这个的执行顺序不见得在前面吧")
-        return Promise.all([Chapter.findById(chapId),user.save()])
-    }).spread(function(chap,user){
+        return Promise.all([
+            Chapter.findById(chapId),
+            user.save(),
+            Comment.find({chapterId:chapId}),
+            Reply.find({chapterId:chapId})
+        ])
+    }).spread(function(chap,user,comments,replies){
+        var _comPro=comments.map(function(_com){
+            return _com.remove();
+        });
+        var _rePro=replies.map(function(_reply){
+            return _reply.remove();
+        });
+        var promiseAll=_comPro.concat(_rePro);
+        promiseAll.push(chap.remove());
         console.log("User更新完成，chap查找完成");
-        return Promise.all([_User.findById(UID),chap.remove()])
-    }).spread(function(user,chap){
+        return Promise.all(promiseAll);
+    }).spread(function(){
+        console.log("文章下的评论已删除");
         res.send({
-            status:'200',
-            msg:"删除成功"
+            status:"200",
+            msg:"文章删除成功"
         })
     }).catch(function(e){
+        console.log(e);
         res.send({
             status:"503",
             err:e
