@@ -8,8 +8,9 @@ var _User=schemas.User;
 
 //查询所有chapter,createTime.sort()
 router.get("/",function(req,res,next){
-    var limit=req.body.limit||10;
-    var offset=req.body.offset||0;
+    var limit=req.query.limit-0||10;
+    var offset=req.query.offset-0||0;
+    console.log(typeof offset);
     var options = {
         // select:   'title date author',
         sort:     { createTime: -1 },
@@ -37,7 +38,7 @@ router.get("/",function(req,res,next){
             select:"nickname imgUrl"
         }],
         lean:     true,
-        offset:   offset, 
+        offset:   offset*limit, 
         limit:    limit
     };
     Chapter.paginate({},options).then(function(result){
@@ -46,7 +47,7 @@ router.get("/",function(req,res,next){
             chaps:result.docs,
             msg:"获取成功",
             total:result.total,
-            offset:result.offset,
+            offset:offset,
             limit:result.limit
         })
     }).catch(function(err){

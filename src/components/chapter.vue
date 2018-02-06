@@ -3,7 +3,6 @@
         <h1 class="title">{{chap.title}}</h1>
         <p v-html="chap.content" class="chapter_content"></p>
         <div class="controls">
-          <More msg="More"/>
           <span><a href="javascript:void(0)" @click="delHandler" :data-id="chap._id" v-if="del">删除</a></span>
           <span><a href="javascript:void(0)" @click="toggleComment">{{showInputBox?"取消":"评论"}}</a></span>
         </div>
@@ -17,7 +16,7 @@
 <script>
 import Comments from "./comments.vue"
 import CommentBox from "./comment_input"
-import More from "./more"
+// import More from "./more"
 import axios from "axios"
 import Bus from "./bus"
 export default {
@@ -34,7 +33,7 @@ export default {
     // console.log(this.chap)
   },
   components:{
-    Comments,More,CommentBox
+    Comments,CommentBox
   },
   methods:{
     toggleComment:function(){
