@@ -20,35 +20,40 @@ import Bus from "./bus";
 
 export default {
   props: ["chapId", "targetId", "closeBox"],
-  data(){
-    return{
-      content:""
-    }
+  data() {
+    return {
+      content: ""
+    };
   },
   methods: {
     submitHandler: function(e) {
       var that = this;
       e = e || window.event;
       e.preventDefault();
-      var content =this.content;
-      //   var UID=getCookie("UID")||"";
-      //   console.log(this.targetId,this.chapId)
-      if (this.chapId && this.targetId) {
-        axios
-          .post(`/comment/publish`, {
-            timestamp:Date.now(),
-            chapterId: this.chapId,
-            targetId: this.targetId,
-            content: content
-          })
-          .then(function(res) {
-            if (res.data.status === "200") {
-              that.$emit("toggle");
-              that.content="";
-              Bus.$emit("refresh",res.data.msg+"是你发了三次?");
-            }
-          });
+      var content = this.content;
+      var UID = getCookie("UID") || "";
+      var loged = localStorage.getItem("loged");
+      if (UID && loged) {
+        if (this.chapId && this.targetId) {
+          axios
+            .post(`/comment/publish`, {
+              timestamp: Date.now(),
+              chapterId: this.chapId,
+              targetId: this.targetId,
+              content: content
+            })
+            .then(function(res) {
+              if (res.data.status === "200") {
+                that.$emit("toggle");
+                that.content = "";
+                Bus.$emit("refresh", res.data.msg);
+              }
+            });
+        }
+      } else {
+        Bus.$emit("err", "请先登录");
       }
+
       return false;
     }
   }

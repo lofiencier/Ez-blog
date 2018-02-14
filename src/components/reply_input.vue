@@ -18,6 +18,7 @@
 <script>
 import axios from "axios"
 import Bus from "./bus"
+import {getCookie} from "./util"
 export default {
   data(){
     return{
@@ -38,13 +39,20 @@ export default {
     },
     postReply: function(info,form) {
       var that =this;
-      axios.post("/reply/publish",info).then(function(result){
+      var cookie=getCookie("UID");
+      var loged=localStorage.getItem("loged");
+      if(cookie&&loged){
+        axios.post("/reply/publish",info).then(function(result){
         if(result.data.status==="200"){
           Bus.$emit("refresh",result.data.msg);
           that.$emit("toggle");
           // Bus.$emit("popup",result.data.msg);
         }
-      })
+      });
+      }else{
+        Bus.$emit("err","请先登录");
+      }
+      
     }
   },
   props: ["creator", "targetUser","commentId","chapId"]

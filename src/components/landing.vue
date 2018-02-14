@@ -156,6 +156,15 @@ export default {
               if(data.status==="200"){
                 _this.setLoginState(data.profile);
                 Bus.$emit('popup','注册成功!');
+                return axios.post("/login",{
+                  email:_this.sign.email,
+                  password:_this.sign.pass,
+                  rememberLogin:false
+                })
+              }
+            }).then(function({data}){
+              if(data.status==="200"){
+                _this.$router.push("/");
               }
             })
       },

@@ -1,9 +1,12 @@
 {
-  "name": "ez-blog",
+  "name": "leafter",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "Blog build by Vue,Express,MongoDB",
   "author": "[E.N.V.Y] <842028554@qq.com>",
   "private": true,
+  "keywords": [
+    "Vue","express","mongoDB","blog","leafer","Vue blog","mongoose","simple blog"
+  ],
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "node ./bin/www",

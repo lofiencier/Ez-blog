@@ -47,10 +47,8 @@ export default {
           if(_this.chapters.length===0){
             _this.chapters=result.data.chaps;
           }else{
-            console.log("你有运行吗");
             // _this.chapters.concat(result.data.chaps);
             _this.chapters=Array.prototype.concat(_this.chapters,result.data.chaps);
-            console.log(_this.chapters);
           }
           _this.total=result.data.total;
           document.addEventListener("scroll",_this.scrollEvent);

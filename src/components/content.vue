@@ -33,7 +33,7 @@ export default {
       axios.get("/chapter",{params:{UID:_this.UID}}).then(res => {
         this.chapters = res.data.chaps;
         if(msg){
-          Bus.$emit("popup",msg+"来自content");
+          Bus.$emit("popup",msg);
         }
       });
     }

@@ -78,7 +78,7 @@ export default {
         axios
           .post("/user/update", {
             nickname: this.nickname,
-            imgUrl: this.responseUrl,
+            imgUrl: this.responseUrl||this.imageUrl,
             description: this.description
           })
           .then(function({ data }) {
@@ -98,6 +98,7 @@ export default {
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw);
       // console.log(res,file);
+      console.log(this.imageUrl);
       this.responseUrl = res.url;
     },
     beforeAvatarUpload: function(file) {

@@ -19,6 +19,7 @@
 import E from "wangeditor";
 import axios from "axios";
 import Bus from "./bus";
+import {getCookie} from "./util"
 
 export default {
   name: "editor",
@@ -36,8 +37,12 @@ export default {
       // console.log(this);
       var title = this.title;
       var _this = this;
+      var loged=localStorage.getItem("loged");
+      var cookie=getCookie("UID");
+      
       if (content && title) {
-        axios
+        if(loged&&cookie){
+          axios
           .post("/chapter/publish", {
             content,
             title
@@ -50,6 +55,9 @@ export default {
               // Bus.$emit("popup", result.data.msg);
             }
           });
+        }else{
+          Bus.$emit("err","请先登录");
+        }
       } else {
         console.warn("HERE SHOW YOUR BOX_E");
         Bus.$emit("popup", "缺少参数");
