@@ -58,7 +58,17 @@ export default {
           if (!reg.test(value)) {
             callback(new Error('请输入有效的邮箱'));
           } else {
-            callback();
+            console.log(">>>");
+            axios.post("/signup/precheck",{
+              email:value
+            }).then(({data})=>{
+              console.log(data);
+              if(data.status==="200"){
+                callback();
+              }else{
+                callback(new Error("此邮箱被注册"));
+              }
+            })
           }
         }, 1000);
       };
@@ -122,7 +132,6 @@ export default {
             // alert('submit!');
             this.postToDB();
           } else {
-            console.log('error submit!!');
             return false;
           }
         });
@@ -134,7 +143,6 @@ export default {
           password:this.login.password,
           rememberLogin:this.rememberLogin
         }).then(function({data}){
-          console.log(data);
           if(data.status==="200"){
             Bus.$emit('popup',"登陆成功！");
             _this.setLoginState(data.profile);

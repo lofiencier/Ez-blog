@@ -13,6 +13,7 @@ import Header from "./header.vue"
 import Content from "./content.vue"
 import Avatar from "./avatar.vue"
 import {getCookie} from "./util"
+import Bus from "./bus"
 export default {
   name: 'Mine',
   data () {
@@ -23,6 +24,7 @@ export default {
     }
   },
  created(){
+   Bus.$on("logout",this.logout);
     var UID=getCookie("UID");
     this.UID=UID;
     var loged=localStorage.getItem("loged");
@@ -34,8 +36,16 @@ export default {
       this.imgUrl=imgUrl;
     }
   },
+  beforeDestory(){
+    Bus.$off("logout",this.logout);
+  },
   components:{
     Header,Content,Avatar
+  },
+  methods:{
+    logout:function(loged){
+      this.loged=loged;
+    }
   }
 }
 </script>

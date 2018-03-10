@@ -69,4 +69,26 @@ router.post("/logout",function(req,res,next){
     }
 })
 
+router.post("/precheck",function(req,res,next){
+    var email=req.body.email;
+    _User.find({ "email": email },function(err,user){
+        if(user.length>0){
+            res.send({
+                status:"503",
+                msg:"此邮箱已被注册"
+            })
+        }else{
+            res.send({
+                status:"200",
+                msg:"此邮箱可以注册"
+            })
+        }
+    }).catch((e)=>{
+        res.send({
+            status:"503",
+            msg:"此邮箱已被注册"
+        })
+    })
+})
+
 module.exports = router;

@@ -1,11 +1,12 @@
 {
   "name": "leafter",
   "version": "1.0.0",
-  "description": "Blog build by Vue,Express,MongoDB",
+  "description": "Vue-express-mongodb构建的简易博客",
+  "homepage": "http://54.238.255.128/#/",
   "author": "[E.N.V.Y] <842028554@qq.com>",
   "private": true,
   "keywords": [
-    "Vue","express","mongoDB","blog","leafer","Vue blog","mongoose","simple blog"
+    "Vue","express","mongoDB","blog","leafer","Vue blog","mongoose","simple blog","博客"
   ],
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",

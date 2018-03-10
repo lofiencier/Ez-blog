@@ -58,7 +58,6 @@ export default {
       var _this=this;
       axios.post("/user",{UID:_this.UID}).then(function({data}){
         if(data.status==="200"){
-          console.log(data);
           _this.imgUrl=data.imgUrl;
           _this.description=data.description;
           _this.nickname=data.nickname;
@@ -77,7 +76,6 @@ export default {
       initFormatDate();
       var newDate=new Date();
       newDate.setTime(this.createTime);
-      console.log(newDate,newDate.format('yyyy-MM-dd'));
       return newDate.format('yyyy-MM-dd');
 
     }

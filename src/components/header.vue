@@ -92,7 +92,7 @@ export default {
           this.loged=false;
           // delCookie("UID");
           localStorage.setItem("loged",false);
-          console.log("setlogout run");
+          Bus.$emit("logout",false);
           var _this=this;
           axios.post("/signup/logout").then(function({data}){
             _this.isLoged();

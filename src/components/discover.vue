@@ -67,7 +67,6 @@ export default {
       if(height-clientHeight-scrollHeight<4){
         Bus.$emit("showLoadMore",true);
         if(this.offset<=this.pages){
-          console.log(this.offset,this.pages);
           this.offset+=1;
           document.removeEventListener("scroll",this.scrollEvent);
           this.fetchChapters(this.offset);

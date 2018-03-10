@@ -10,7 +10,7 @@
             </a>
             <span>{{reply.content}}</span>
             <a href="javascript:void(0)" class="reply" @click="toggleReplyInput" :data-id="reply.replier._id">{{showReplyInput?"取消":"回复"}}</a> 
-            <a href="javascript:void(0)" class="del" @click="delReply(commentId,reply._id)">{{me===reply.replier._id?"删除":""}}</a>
+            <a href="javascript:void(0)" class="del" @click="delReply(commentId,reply._id)">{{me===reply.replier._id&&loged?"删除":""}}</a>
         </div>
         <ReplyInput v-if="showReplyInput" :targetUser="reply.replier" :commentId="commentId" @toggle="toggleReplyInput"/>
     </div>
@@ -24,7 +24,7 @@ import {getCookie} from "./util"
 import Bus from "./bus"
 
 export default {
-  props: ["reply", "top", "commentId"],
+  props: ["reply", "top", "commentId","loged"],
   mounted() {
     // console.log(this.up);
 
@@ -51,7 +51,7 @@ export default {
         // console.log(data);
         if(data.status==="200"){
           console.log("这里运行多少次?")
-          Bus.$emit("refresh",data.msg+"两次都是你？");
+          Bus.$emit("refresh",data.msg);
 
         }
       })
